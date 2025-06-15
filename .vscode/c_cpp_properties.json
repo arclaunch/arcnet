@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Default",
+            "includePath": [
+                "${workspaceFolder}/arcnet/lib/**",
+                "${workspaceFolder}/arcnet/**/lib/**",
+                "${workspaceFolder}/arcnet/**/include",
+                "${workspaceFolder}/arcnet/lib/boost/**"
+            ]
+        }
+    ],
+    "version": 4
+}
