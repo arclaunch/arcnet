@@ -1,0 +1,6 @@
+[submodule "lib/mdns"]
+	path = lib/mdns
+	url = https://github.com/mjansson/mdns
+[submodule "lib/event"]
+	path = lib/event
+	url = https://github.com/libevent/libevent
