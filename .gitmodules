@@ -4,3 +4,150 @@
 [submodule "arcnet/lib/event"]
 	path = arcnet/lib/event
 	url = https://github.com/libevent/libevent
+[submodule "arcnet/lib/boost/asio"]
+	path = arcnet/lib/boost/asio
+	url = https://github.com/boostorg/asio/
+[submodule "arcnet/lib/boost/align"]
+	path = arcnet/lib/boost/align
+	url = https://github.com/boostorg/align/
+[submodule "arcnet/lib/boost/assert"]
+	path = arcnet/lib/boost/assert
+	url = https://github.com/boostorg/assert/
+[submodule "arcnet/lib/boost/config"]
+	path = arcnet/lib/boost/config
+	url = https://github.com/boostorg/config/
+[submodule "arcnet/lib/boost/context"]
+	path = arcnet/lib/boost/context
+	url = https://github.com/boostorg/context/
+[submodule "arcnet/lib/boost/date_time"]
+	path = arcnet/lib/boost/date_time
+	url = https://github.com/boostorg/date_time/
+[submodule "arcnet/lib/boost/system"]
+	path = arcnet/lib/boost/system
+	url = https://github.com/boostorg/system/
+[submodule "arcnet/lib/boost/throw_exception"]
+	path = arcnet/lib/boost/throw_exception
+	url = https://github.com/boostorg/throw_exception/
+[submodule "arcnet/lib/boost/core"]
+	path = arcnet/lib/boost/core
+	url = https://github.com/boostorg/core/
+[submodule "arcnet/lib/boost/variant2"]
+	path = arcnet/lib/boost/variant2
+	url = https://github.com/boostorg/variant2/
+[submodule "arcnet/lib/boost/algorithm"]
+	path = arcnet/lib/boost/algorithm
+	url = https://github.com/boostorg/algorithm/
+[submodule "arcnet/lib/boost/array"]
+	path = arcnet/lib/boost/array
+	url = https://github.com/boostorg/array/
+[submodule "arcnet/lib/boost/mp11"]
+	path = arcnet/lib/boost/mp11
+	url = https://github.com/boostorg/mp11/
+[submodule "arcnet/lib/boost/winapi"]
+	path = arcnet/lib/boost/winapi
+	url = https://github.com/boostorg/winapi/
+[submodule "arcnet/lib/boost/io"]
+	path = arcnet/lib/boost/io
+	url = https://github.com/boostorg/io/
+[submodule "arcnet/lib/boost/static_assert"]
+	path = arcnet/lib/boost/static_assert
+	url = https://github.com/boostorg/static_assert/
+[submodule "arcnet/lib/boost/bind"]
+	path = arcnet/lib/boost/bind
+	url = https://github.com/boostorg/bind/
+[submodule "arcnet/lib/boost/pool"]
+	path = arcnet/lib/boost/pool
+	url = https://github.com/boostorg/pool/
+[submodule "arcnet/lib/boost/lexical_cast"]
+	path = arcnet/lib/boost/lexical_cast
+	url = https://github.com/boostorg/lexical_cast/
+[submodule "arcnet/lib/boost/predef"]
+	path = arcnet/lib/boost/predef
+	url = https://github.com/boostorg/predef/
+[submodule "arcnet/lib/boost/concept_check"]
+	path = arcnet/lib/boost/concept_check
+	url = https://github.com/boostorg/concept_check/
+[submodule "arcnet/lib/boost/integer"]
+	path = arcnet/lib/boost/integer
+	url = https://github.com/boostorg/integer/
+[submodule "arcnet/lib/boost/container"]
+	path = arcnet/lib/boost/container
+	url = https://github.com/boostorg/container/
+[submodule "arcnet/lib/boost/numeric_conversion"]
+	path = arcnet/lib/boost/numeric_conversion
+	url = https://github.com/boostorg/numeric_conversion/
+[submodule "arcnet/lib/boost/smart_ptr"]
+	path = arcnet/lib/boost/smart_ptr
+	url = https://github.com/boostorg/smart_ptr/
+[submodule "arcnet/lib/boost/exception"]
+	path = arcnet/lib/boost/exception
+	url = https://github.com/boostorg/exception/
+[submodule "arcnet/lib/boost/preprocessor"]
+	path = arcnet/lib/boost/preprocessor
+	url = https://github.com/boostorg/preprocessor/
+[submodule "arcnet/lib/boost/intrusive"]
+	path = arcnet/lib/boost/intrusive
+	url = https://github.com/boostorg/intrusive/
+[submodule "arcnet/lib/boost/range"]
+	path = arcnet/lib/boost/range
+	url = https://github.com/boostorg/range/
+[submodule "arcnet/lib/boost/type_traits"]
+	path = arcnet/lib/boost/type_traits
+	url = https://github.com/boostorg/type_traits/
+[submodule "arcnet/lib/boost/conversion"]
+	path = arcnet/lib/boost/conversion
+	url = https://github.com/boostorg/conversion/
+[submodule "arcnet/lib/boost/function"]
+	path = arcnet/lib/boost/function
+	url = https://github.com/boostorg/function/
+[submodule "arcnet/lib/boost/move"]
+	path = arcnet/lib/boost/move
+	url = https://github.com/boostorg/move/
+[submodule "arcnet/lib/boost/tokenizer"]
+	path = arcnet/lib/boost/tokenizer
+	url = https://github.com/boostorg/tokenizer/
+[submodule "arcnet/lib/boost/tuple"]
+	path = arcnet/lib/boost/tuple
+	url = https://github.com/boostorg/tuple/
+[submodule "arcnet/lib/boost/mpl"]
+	path = arcnet/lib/boost/mpl
+	url = https://github.com/boostorg/mpl/
+[submodule "arcnet/lib/boost/container_hash"]
+	path = arcnet/lib/boost/container_hash
+	url = https://github.com/boostorg/container_hash/
+[submodule "arcnet/lib/boost/detail"]
+	path = arcnet/lib/boost/detail
+	url = https://github.com/boostorg/detail/
+[submodule "arcnet/lib/boost/utility"]
+	path = arcnet/lib/boost/utility
+	url = https://github.com/boostorg/utility/
+[submodule "arcnet/lib/boost/describe"]
+	path = arcnet/lib/boost/describe
+	url = https://github.com/boostorg/describe/
+[submodule "arcnet/lib/boost/iterator"]
+	path = arcnet/lib/boost/iterator
+	url = https://github.com/boostorg/iterator/
+[submodule "arcnet/lib/boost/regex"]
+	path = arcnet/lib/boost/regex
+	url = https://github.com/boostorg/regex/
+[submodule "arcnet/lib/boost/fusion"]
+	path = arcnet/lib/boost/fusion
+	url = https://github.com/boostorg/fusion/
+[submodule "arcnet/lib/boost/optional"]
+	path = arcnet/lib/boost/optional
+	url = https://github.com/boostorg/optional/
+[submodule "arcnet/lib/boost/unordered"]
+	path = arcnet/lib/boost/unordered
+	url = https://github.com/boostorg/unordered/
+[submodule "arcnet/lib/boost/function_types"]
+	path = arcnet/lib/boost/function_types
+	url = https://github.com/boostorg/function_types/
+[submodule "arcnet/lib/boost/typeof"]
+	path = arcnet/lib/boost/typeof
+	url = https://github.com/boostorg/typeof/
+[submodule "arcnet/lib/boost/functional"]
+	path = arcnet/lib/boost/functional
+	url = https://github.com/boostorg/functional/
+[submodule "arcnet/lib/fmt"]
+	path = arcnet/lib/fmt
+	url = https://github.com/fmtlib/fmt
