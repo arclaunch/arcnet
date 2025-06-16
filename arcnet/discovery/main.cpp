@@ -2,6 +2,7 @@
 #include "arcnet/discovery/mdns/mdns_emitter.hpp"
 
 #include <event2/event.h>
+#include <iostream>
 
 using namespace arcnet::discovery;
 using namespace arcnet::discovery::mdns;
@@ -23,6 +24,10 @@ int main(void)
 
     MDNSEmitter *emit = new MDNSEmitter(base);
     emit->configure(opt);
+
+    std::wcout << "ready\n";
+    event_base_dispatch(base);
+    std::wcout << "done\n";
 
     return 0;
 }

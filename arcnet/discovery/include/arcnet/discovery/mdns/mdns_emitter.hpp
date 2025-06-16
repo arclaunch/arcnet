@@ -34,13 +34,27 @@ namespace arcnet::discovery::mdns
         Service *svc;
         void determineLocalIP4();
 
-        sockaddr_in *defaultTarget4();
-        sockaddr_in6 *defaultTarget6();
+        const std::string dns_sd_svc = std::string("_services._dns-sd._udp.local.");
 
     public:
         MDNSEmitter(event_base *base) : Emitter(base) {};
 
         bool configure(MDNSOptions *opt);
+
+        static void read_callback(evutil_socket_t sock, short what, void *arg);
+
+        void handle_read(evutil_socket_t sock, short what);
+
+        // mdns service callback - handle questions incoming on service sock
+        static int service_callback(int sock, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry,
+                                    uint16_t query_id, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data,
+                                    size_t size, size_t name_offset, size_t name_length, size_t record_offset,
+                                    size_t record_length, void *arg);
+
+        int handle_svc_query(int sock, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry,
+                             uint16_t query_id, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data,
+                             size_t size, size_t name_offset, size_t name_length, size_t record_offset,
+                             size_t record_length);
     };
 }
 

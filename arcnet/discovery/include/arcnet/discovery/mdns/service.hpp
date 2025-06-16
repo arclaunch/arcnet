@@ -39,6 +39,20 @@ namespace arcnet::discovery::mdns
     public:
         Service(std::string service, std::string hostname, int port, sockaddr_in addr_v4, sockaddr_in6 addr_v6);
 
+        inline std::string getServiceName() { return this->service; };
+        inline std::string getServiceInstanceName() { return this->service_instance; };
+        inline std::string getQualifiedHostname() { return this->hostname_qualified; };
+
+        inline struct sockaddr_in getAddr4() { return this->addr_v4; };
+        inline struct sockaddr_in6 getAddr6() { return this->addr_v6; };
+
+        inline struct mdns_record_t getRecordA() { return this->a; };
+        inline struct mdns_record_t getRecordAAAA() { return this->aaaa; };
+        inline struct mdns_record_t getRecordPTR() { return this->ptr; };
+        inline struct mdns_record_t getRecordSRV() { return this->srv; };
+
+        inline std::vector<struct mdns_record_t> getOptionalRecords() { return this->optional_records; };
+
         bool announce(int sock);
     };
 }

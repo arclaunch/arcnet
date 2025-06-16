@@ -12,14 +12,25 @@
 namespace arcnet::discovery
 {
 
+    union in_addr_any
+    {
+        struct in_addr ip4;
+        struct in6_addr ip6;
+    };
+
     class IPAddress
     {
     private:
         int family;
         std::string str;
 
+        static std::string ntop(int family, in_addr_any addr);
+
     public:
         IPAddress(int family, std::string str);
+        static IPAddress fromInAddr(int family, in_addr_any addr);
+        static IPAddress fromSai4(sockaddr_in *addr);
+        static IPAddress fromSai6(sockaddr_in6 *addr);
 
         inline int getFamily() { return this->family; };
         inline std::string getAddressStr() { return this->str; };
@@ -32,12 +43,6 @@ namespace arcnet::discovery
     class Interfaces
     {
     private:
-        union in_addr_any
-        {
-            struct in_addr ip4;
-            struct in6_addr ip6;
-        };
-
         const std::string loopbackInterface = std::string("lo");
         const std::string loopback4 = std::string("127.0.0.1");
         const std::string loopback6 = std::string("::1");

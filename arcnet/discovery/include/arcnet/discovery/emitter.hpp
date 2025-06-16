@@ -23,6 +23,8 @@ namespace arcnet::discovery
         event_base *base;
         Interfaces *interfaces;
 
+        struct event *ev;
+
     public:
         Emitter(event_base *base)
         {

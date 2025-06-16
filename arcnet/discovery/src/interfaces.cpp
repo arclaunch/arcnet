@@ -15,6 +15,38 @@ namespace arcnet::discovery
         this->str = str;
     };
 
+    IPAddress IPAddress::fromInAddr(int family, in_addr_any addr)
+    {
+        return IPAddress(family, ntop(family, addr));
+    };
+
+    IPAddress IPAddress::fromSai4(sockaddr_in *sai)
+    {
+        in_addr_any addr;
+        addr.ip4 = sai->sin_addr;
+        return fromInAddr(AF_INET, addr);
+    };
+
+    IPAddress IPAddress::fromSai6(sockaddr_in6 *sai)
+    {
+        in_addr_any addr;
+        addr.ip6 = sai->sin6_addr;
+        return fromInAddr(AF_INET6, addr);
+    };
+
+    std::string IPAddress::ntop(int family, in_addr_any addr)
+    {
+        int len = (family == AF_INET ? INET_ADDRSTRLEN : INET6_ADDRSTRLEN);
+
+        char *cstr = new char[len];
+
+        // can return empty str
+        inet_ntop(family, &addr, cstr, len);
+
+        std::string str(cstr);
+        return str;
+    };
+
     int IPAddress::getAddressStrLen()
     {
         return (family == AF_INET ? INET_ADDRSTRLEN : INET6_ADDRSTRLEN);
@@ -64,43 +96,32 @@ namespace arcnet::discovery
                 ips = new std::vector<IPAddress>();
             }
 
-            if (ifa->ifa_addr && ifa->ifa_addr->sa_family == AF_INET || AF_INET6)
+            if (ifa->ifa_addr && (ifa->ifa_addr->sa_family == AF_INET || ifa->ifa_addr->sa_family == AF_INET6))
             {
                 // IPv[4|6] address found
 
-                int len;
+                int family = ifa->ifa_addr->sa_family;
+
                 in_addr_any addr;
 
-                switch (ifa->ifa_addr->sa_family)
+                switch (family)
                 {
                 case AF_INET:
                 {
-                    len = INET_ADDRSTRLEN;
                     struct sockaddr_in *sai = (struct sockaddr_in *)ifa->ifa_addr;
                     addr.ip4 = sai->sin_addr;
                     break;
                 }
                 case AF_INET6:
                 {
-                    len = INET6_ADDRSTRLEN;
                     struct sockaddr_in6 *sai6 = (struct sockaddr_in6 *)ifa->ifa_addr;
                     addr.ip6 = sai6->sin6_addr;
                     break;
                 }
                 };
 
-                char *cstr = new char[len];
-
-                inet_ntop(ifa->ifa_addr->sa_family, &addr, cstr, len);
-
-                std::string str(cstr);
-
-                // sometimes returns an empty (excl. null term) string?
-                if (str.length() > 0)
-                {
-                    IPAddress ipa(ifa->ifa_addr->sa_family, str);
-                    ips->push_back(ipa);
-                };
+                IPAddress ip = IPAddress::fromInAddr(family, addr);
+                ips->push_back(ip);
             }
 
             (*discovered)[iface_name] = *ips;
