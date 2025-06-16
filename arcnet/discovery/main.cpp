@@ -18,7 +18,7 @@ int main(void)
 
     MDNSOptions *opt = new MDNSOptions();
     opt->port = 5432;
-    opt->service = "_test._udp.local";
+    opt->service = "_test._udp.local.";
 
     struct event_base *base = event_base_new();
 

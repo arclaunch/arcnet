@@ -38,7 +38,13 @@ namespace arcnet::discovery::mdns
 
     bool MDNSEmitter::createSocket()
     {
-        sock = mdns_socket_open_ipv4(INADDR_ANY);
+        sockaddr_in *sa4 = new sockaddr_in();
+
+        sa4->sin_family = AF_INET;
+        sa4->sin_addr.s_addr = INADDR_ANY;
+        sa4->sin_port = htons(PORT);
+
+        sock = mdns_socket_open_ipv4(sa4);
 
         if (sock < 0)
         {
@@ -86,14 +92,16 @@ namespace arcnet::discovery::mdns
         mdns_record_type_t rtype_t = mdns_record_type_t(rtype);
 
         //        char *addrbuffer = new char[64];
-        char *namebuffer = new char[256];
-        char *sendbuffer = new char[1024];
+        int namebuffer_len = 256;
+        char *namebuffer = new char[namebuffer_len];
+        int sendbuffer_len = 1024;
+        char *sendbuffer = new char[sendbuffer_len];
 
-        IPAddress from_addr = IPAddress(from->sa_family, from->sa_data);
+        IPAddress from_addr = IPAddress::fromSai4((sockaddr_in *)from);
 
         // get name
         size_t offset = name_offset;
-        mdns_string_t name = mdns_string_extract(data, size, &offset, namebuffer, sizeof(namebuffer));
+        mdns_string_t name = mdns_string_extract(data, size, &offset, namebuffer, namebuffer_len);
 
         // print record type
 
@@ -109,18 +117,18 @@ namespace arcnet::discovery::mdns
                 // "<hostname>.<_service-name>._tcp.local."
 
                 // JC: use existing ptr
-                mdns_record_t answer = svc->getRecordPTR();
+                mdns_record_t answer = svc->getRecordPTRServiceDiscovery();
 
                 // see if requested format is unicast or multicast depending on query flag
                 uint16_t unicast = (rclass & MDNS_UNICAST_RESPONSE);
 
                 if (unicast)
                 {
-                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sizeof(sendbuffer), query_id, rtype_t, name.str, name.length, answer, 0, 0, 0, 0);
+                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sendbuffer_len, query_id, rtype_t, name.str, name.length, answer, 0, 0, 0, 0);
                 }
                 else
                 {
-                    mdns_query_answer_multicast(sock, sendbuffer, sizeof(sendbuffer), answer, 0, 0, 0, 0);
+                    mdns_query_answer_multicast(sock, sendbuffer, sendbuffer_len, answer, 0, 0, 0, 0);
                 }
             }
             // check if query was our service
@@ -143,11 +151,11 @@ namespace arcnet::discovery::mdns
 
                 if (unicast)
                 {
-                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sizeof(sendbuffer), query_id, rtype_t, name.str, name.length, answer, 0, 0, additional, additional_count);
+                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sendbuffer_len, query_id, rtype_t, name.str, name.length, answer, 0, 0, additional, additional_count);
                 }
                 else
                 {
-                    mdns_query_answer_multicast(sock, sendbuffer, sizeof(sendbuffer), answer, 0, 0, additional, additional_count);
+                    mdns_query_answer_multicast(sock, sendbuffer, sendbuffer_len, answer, 0, 0, additional, additional_count);
                 }
             }
         }
@@ -168,11 +176,11 @@ namespace arcnet::discovery::mdns
 
                 if (unicast)
                 {
-                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sizeof(sendbuffer), query_id, rtype_t, name.str, name.length, answer, 0, 0, additional, additional_count);
+                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sendbuffer_len, query_id, rtype_t, name.str, name.length, answer, 0, 0, additional, additional_count);
                 }
                 else
                 {
-                    mdns_query_answer_multicast(sock, sendbuffer, sizeof(sendbuffer), answer, 0, 0, additional, additional_count);
+                    mdns_query_answer_multicast(sock, sendbuffer, sendbuffer_len, answer, 0, 0, additional, additional_count);
                 }
             }
         }
@@ -191,11 +199,11 @@ namespace arcnet::discovery::mdns
 
                 if (unicast)
                 {
-                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sizeof(sendbuffer), query_id, rtype_t, name.str, name.length, answer, 0, 0, 0, 0);
+                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sendbuffer_len, query_id, rtype_t, name.str, name.length, answer, 0, 0, 0, 0);
                 }
                 else
                 {
-                    mdns_query_answer_multicast(sock, sendbuffer, sizeof(sendbuffer), answer, 0, 0, 0, 0);
+                    mdns_query_answer_multicast(sock, sendbuffer, sendbuffer_len, answer, 0, 0, 0, 0);
                 }
             }
             else if ((rtype == MDNS_RECORDTYPE_AAAA || rtype == MDNS_RECORDTYPE_ANY) && (svc->getAddr6().sin6_family == AF_INET6))
@@ -209,11 +217,11 @@ namespace arcnet::discovery::mdns
 
                 if (unicast)
                 {
-                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sizeof(sendbuffer), query_id, rtype_t, name.str, name.length, answer, 0, 0, 0, 0);
+                    mdns_query_answer_unicast(sock, from, addrlen, sendbuffer, sendbuffer_len, query_id, rtype_t, name.str, name.length, answer, 0, 0, 0, 0);
                 }
                 else
                 {
-                    mdns_query_answer_multicast(sock, sendbuffer, sizeof(sendbuffer), answer, 0, 0, 0, 0);
+                    mdns_query_answer_multicast(sock, sendbuffer, sendbuffer_len, answer, 0, 0, 0, 0);
                 }
             }
         };

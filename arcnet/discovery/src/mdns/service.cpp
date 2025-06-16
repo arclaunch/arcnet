@@ -16,13 +16,15 @@ namespace arcnet::discovery::mdns
 
         // Generate service_instance and hostname_qualified
         this->service_instance = fmt::format("{}.{}", hostname, service);
-        this->hostname_qualified = fmt::format("{}.local", hostname);
+        this->hostname_qualified = fmt::format("{}.local.", hostname);
 
         // Create records
         createRecordA(a);
         createRecordAAAA(aaaa);
         createRecordPTR(ptr);
         createRecordSRV(srv);
+
+        createRecordPTRServiceDiscovery(ptr_sd);
     };
 
     void Service::toMdnsString(std::string src, mdns_string_t &dst)
@@ -63,6 +65,15 @@ namespace arcnet::discovery::mdns
         toMdnsString(service, record.name);
         record.type = MDNS_RECORDTYPE_PTR;
         toMdnsString(service_instance, record.data.ptr.name);
+        ptr.rclass = 0;
+        ptr.ttl = 0;
+    };
+
+    void Service::createRecordPTRServiceDiscovery(mdns_record_t &record)
+    {
+        toMdnsString("_services._dns-sd._udp.local.", record.name);
+        record.type = MDNS_RECORDTYPE_PTR;
+        toMdnsString(service, record.data.ptr.name);
         ptr.rclass = 0;
         ptr.ttl = 0;
     };

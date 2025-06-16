@@ -37,6 +37,8 @@ namespace arcnet::discovery::mdns
         const std::string dns_sd_svc = std::string("_services._dns-sd._udp.local.");
 
     public:
+        static constexpr int PORT = 5353;
+
         MDNSEmitter(event_base *base) : Emitter(base) {};
 
         bool configure(MDNSOptions *opt);

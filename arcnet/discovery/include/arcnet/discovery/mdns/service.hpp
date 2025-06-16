@@ -27,6 +27,8 @@ namespace arcnet::discovery::mdns
         struct mdns_record_t ptr;
         struct mdns_record_t srv;
 
+        struct mdns_record_t ptr_sd;
+
         std::vector<struct mdns_record_t> optional_records;
 
         void toMdnsString(std::string src, mdns_string_t &dst);
@@ -34,6 +36,7 @@ namespace arcnet::discovery::mdns
         void createRecordA(mdns_record_t &record);
         void createRecordAAAA(mdns_record_t &record);
         void createRecordPTR(mdns_record_t &record);
+        void createRecordPTRServiceDiscovery(mdns_record_t &record);
         void createRecordSRV(mdns_record_t &record);
 
     public:
@@ -50,6 +53,8 @@ namespace arcnet::discovery::mdns
         inline struct mdns_record_t getRecordAAAA() { return this->aaaa; };
         inline struct mdns_record_t getRecordPTR() { return this->ptr; };
         inline struct mdns_record_t getRecordSRV() { return this->srv; };
+
+        inline struct mdns_record_t getRecordPTRServiceDiscovery() { return this->ptr_sd; };
 
         inline std::vector<struct mdns_record_t> getOptionalRecords() { return this->optional_records; };
 
