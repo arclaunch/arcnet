@@ -1,6 +1,6 @@
 [submodule "arcnet/discovery/lib/mdns"]
 	path = arcnet/discovery/lib/mdns
-	url = https://github.com/mjansson/mdns
+	url = https://github.com/arclaunch/mdns
 [submodule "arcnet/lib/event"]
 	path = arcnet/lib/event
 	url = https://github.com/libevent/libevent
