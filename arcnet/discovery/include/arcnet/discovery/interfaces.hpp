@@ -7,6 +7,9 @@
 
 #ifndef WIN32
 #include <arpa/inet.h>
+#else
+#include <winsock2.h>
+#include <ws2tcpip.h>
 #endif
 
 namespace arcnet::discovery

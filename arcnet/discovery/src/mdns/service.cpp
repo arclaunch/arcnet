@@ -44,7 +44,7 @@ namespace arcnet::discovery::mdns
         record.rclass = 0;
         record.ttl = 0;
 
-        if (addr_v4.sin_family = AF_INET)
+        if (addr_v4.sin_family == AF_INET)
             optional_records.push_back(record);
     };
 
@@ -56,7 +56,7 @@ namespace arcnet::discovery::mdns
         record.rclass = 0;
         record.ttl = 0;
 
-        if (addr_v6.sin6_family = AF_INET)
+        if (addr_v6.sin6_family == AF_INET)
             optional_records.push_back(record);
     };
 

@@ -3,6 +3,8 @@
 #ifndef WIN32
 #include <sys/socket.h>
 #include <ifaddrs.h>
+#else
+#include <iphlpapi.h>
 #endif
 
 #include <iostream>
@@ -126,6 +128,74 @@ namespace arcnet::discovery
 
             (*discovered)[iface_name] = *ips;
         };
+#else
+        DWORD rv, size;
+        PIP_ADAPTER_ADDRESSES adapter_addresses, aa;
+        PIP_ADAPTER_UNICAST_ADDRESS ua;
+
+        rv = GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, NULL, NULL, &size);
+        if (rv != ERROR_BUFFER_OVERFLOW)
+        {
+            fprintf(stderr, "GetAdaptersAddresses() failed...");
+            return;
+        }
+        adapter_addresses = (PIP_ADAPTER_ADDRESSES)malloc(size);
+
+        rv = GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, NULL, adapter_addresses, &size);
+        if (rv != ERROR_SUCCESS)
+        {
+            fprintf(stderr, "GetAdaptersAddresses() failed...");
+            free(adapter_addresses);
+            return;
+        }
+
+        for (aa = adapter_addresses; aa != NULL; aa = aa->Next)
+        {
+
+            std::wstring iface_name_w = std::wstring(aa->FriendlyName);
+            std::string iface_name = std::string(iface_name_w.begin(), iface_name_w.end());
+
+            std::vector<IPAddress> *ips;
+            // get or default
+            if (discovered->find(iface_name) != discovered->end())
+            {
+                ips = &(discovered->at(iface_name));
+            }
+            else
+            {
+                ips = new std::vector<IPAddress>();
+            }
+
+            for (ua = aa->FirstUnicastAddress; ua != NULL; ua = ua->Next)
+            {
+                int family = ua->Address.lpSockaddr->sa_family;
+                if (family == AF_INET || family == AF_INET6)
+                {
+
+                    in_addr_any addr;
+
+                    switch (family)
+                    {
+                    case AF_INET:
+                    {
+                        struct sockaddr_in *sai = (struct sockaddr_in *)ua->Address.lpSockaddr;
+                        addr.ip4 = sai->sin_addr;
+                        break;
+                    }
+                    case AF_INET6:
+                    {
+                        struct sockaddr_in6 *sai6 = (struct sockaddr_in6 *)ua->Address.lpSockaddr;
+                        addr.ip6 = sai6->sin6_addr;
+                        break;
+                    }
+                    };
+                    IPAddress ip = IPAddress::fromInAddr(family, addr);
+                    ips->push_back(ip);
+                }
+            }
+
+            (*discovered)[iface_name] = *ips;
+        }
 #endif
     };
 

@@ -1,0 +1,40 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "build/${presetName}",
+            "installDir": "build/${presetName}",
+            "generator": "Ninja"
+        },
+        {
+            "name": "native",
+            "displayName": "Native (native)",
+            "inherits": "base",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "windows-cross",
+            "displayName": "Windows (cross-compiled)",
+            "inherits": "base",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolchainFile": "toolchain-mingw64.cmake"
+        },
+        {
+            "name": "android-cross",
+            "displayName": "Android (cross-compiled)",
+            "inherits": "base",
+            "toolchainFile": "toolchain-android.cmake"
+        }
+    ]
+}

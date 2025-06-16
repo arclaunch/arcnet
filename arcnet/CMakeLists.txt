@@ -11,6 +11,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# If using windows, make it a static binary to avoid errors around nor having libgcc[..].dll, libstdcc++[..].dll
+if (WIN32)
+    set(INTERPROCEDURAL_OPTIMIZATION OFF)
+    set(CMAKE_EXE_LINKER_FLAGS "-Wl,-allow-multiple-definition -static-libgcc -static-libstdc++") # for executable projects
+    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-allow-multiple-definition -static-libgcc -static-libstdc++") # for library projects
+endif()
+
 set(EVENT__DISABLE_OPENSSL ON)
 add_subdirectory(lib/event EXCLUDE_FROM_ALL)
 

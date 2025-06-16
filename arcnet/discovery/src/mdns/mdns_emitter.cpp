@@ -58,7 +58,6 @@ namespace arcnet::discovery::mdns
             return false;
         }
 
-        this->sock = sock;
         return true;
     };
 
